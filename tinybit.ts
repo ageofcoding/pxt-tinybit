@@ -16,11 +16,11 @@ enum TinyBitColor {
  * Controls the functions of the Yahboom Tiny:bit robot.
  */
 //% color=#ebd534 weight=100 icon="\uf1b9"
-//% groups='["Motors", "Distance Sensor", "Line Reader","Headlights", "Nav Lights", "Utilities"]'
+//% groups='["Motors", "Distance Sensor", "Line Reader","Headlights", "Nav Lights", "Utilities", "Infrared"]'
 namespace tinybit {
   const PwmControllerAddress = 0x01;
-  const RgbBlock = 0x01;
-  const MotorBlock = 0x02;
+  const RgbPinGroup = 0x01;
+  const MotorPinGroup = 0x02;
 
   let navLightStrip: neopixel.Strip;
 
@@ -51,6 +51,9 @@ namespace tinybit {
    */
   //% weight=2
   //% blockId="tinybit_rgb" block="red %red|green %green|blue %blue"
+  //% red.min=0 red.max=255
+  //% green.min=0 green.max=255
+  //% blue.min=0 blue.max=255
   //% advanced=true
   //% group="Utilities"
   export function rgb(red: number, green: number, blue: number): number {
@@ -67,7 +70,7 @@ namespace tinybit {
     const [red, green, blue] = toRgb(color);
     const i2cBuffer = pins.createBuffer(4);
 
-    i2cBuffer[0] = RgbBlock;
+    i2cBuffer[0] = RgbPinGroup;
     i2cBuffer[1] = red;
     i2cBuffer[2] = green;
     i2cBuffer[3] = blue;
