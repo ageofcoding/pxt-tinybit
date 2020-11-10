@@ -1,11 +1,25 @@
 /**
  * Controls the functions of the Yahboom Tiny:bit robot.
  */
-//% color=#ebd534 weight=100 icon="\f1b9"
+//% color=#ebd534 weight=100 icon="\f544"
 namespace tinybit {
   const PwmControllerAddress = 0x01;
   const RgbBlock = 0x01;
   const MotorBlock = 0x02;
+
+  enum Colors {
+    //% block=red
+    Red = 0xFF0000,
+
+    //% block=green
+    Green = 0x00FF00,
+
+    //% block=blue
+    Blue = 0x0000FF,
+
+    //% block=orange
+    Orange = 0xFFA500,
+  }
 
   function toRgb(color: number): [number, number, number] {
     const red = (color >> 16) & 0xFF;
@@ -16,12 +30,23 @@ namespace tinybit {
   }
 
   /**
+   * Gets a color value by name.
+   * @param color color name
+   */
+  //% weight=1
+  //% blockId="tinybit_color" block="%color"
+  //% advanced=true
+  export function color(color: Colors): number {
+    return color;
+  }
+
+  /**
    * Creates a color from red, green, and blue components.
    * @param red value of the red channel between 0 and 255. eg: 255
    * @param green value of the green channel between 0 and 255. eg: 255
    * @param blue value of the blue channel between 0 and 255. eg: 255
    */
-  //% weight=1
+  //% weight=2
   //% blockId="tinybit_rgb" block="red %red|green %green|blue %blue"
   //% advanced=true
   export function rgb(red: number, green: number, blue: number): number {
@@ -32,6 +57,7 @@ namespace tinybit {
    * Sets a color on the headlights.
    */
   //% blockId="tinybit_setHeadlightColor" block="set headlights to %color"
+  //% weight=1
   export function setHeadlightColor(color: number) {
     const [red, green, blue] = toRgb(color);
     const i2cBuffer = pins.createBuffer(4);
