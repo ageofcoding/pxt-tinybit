@@ -15,7 +15,8 @@ enum TinyBitColor {
 /**
  * Controls the functions of the Yahboom Tiny:bit robot.
  */
-//% color=#ebd534 weight=100 icon="\uf544"
+//% color=#ebd534 weight=100 icon="\uf1b9"
+//% groups='["Motors", "Distance Sensor", "Line Reader","Headlights", "Nav Lights", "Utilities"]'
 namespace tinybit {
   const PwmControllerAddress = 0x01;
   const RgbBlock = 0x01;
@@ -37,6 +38,7 @@ namespace tinybit {
   //% weight=1
   //% blockId="tinybit_color" block="%color"
   //% advanced=true
+  //% group="Utilities"
   export function color(color: TinyBitColor): number {
     return color;
   }
@@ -50,6 +52,7 @@ namespace tinybit {
   //% weight=2
   //% blockId="tinybit_rgb" block="red %red|green %green|blue %blue"
   //% advanced=true
+  //% group="Utilities"
   export function rgb(red: number, green: number, blue: number): number {
     return (red & 0xFF) << 16 | (green & 0xFF) << 8 | (blue & 0xFF);
   }
@@ -57,8 +60,9 @@ namespace tinybit {
   /**
    * Sets a color on the headlights.
    */
-  //% blockId="tinybit_setHeadlightColor" block="set headlights to %color"
+  //% blockId="tinybit_setHeadlightColor" block="set headlights to %color=tinybit_color"
   //% weight=1
+  //% group="Headlights"
   export function setHeadlightColor(color: number) {
     const [red, green, blue] = toRgb(color);
     const i2cBuffer = pins.createBuffer(4);
@@ -75,6 +79,7 @@ namespace tinybit {
    * The neopixel strip for the nav lights
    */
   //% blockId="tinybit_navLights" block="nav light strip"
+  //% group="Nav Lights"
   export function navLights(): neopixel.Strip {
     if (!navLightStrip) {
       navLightStrip = neopixel.create(DigitalPin.P12, 2, NeoPixelMode.RGB);
