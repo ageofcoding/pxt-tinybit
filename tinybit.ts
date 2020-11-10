@@ -36,7 +36,7 @@ namespace tinybit {
    * @param color color name
    */
   //% weight=1
-  //% blockId="tinybit_color" block="%color"
+  //% blockId="tinybit_color" block="color %color"
   //% advanced=true
   export function color(color: TinyBitColor): number {
     return color;
@@ -72,7 +72,11 @@ namespace tinybit {
     pins.i2cWriteBuffer(PwmControllerAddress, i2cBuffer);
   }
 
-  export function navLights: neopixel:Strip {
+  /**
+   * The neopixel strip for the nav lights
+   */
+  //% blockId="tinybit_navLights" block="nav light strip"
+  export function navLights(): neopixel:Strip {
     if (!navLightStrip) {
       navLightStrip = neopixel.create(DigitalPin.P12, 2, NeoPixelMode.RGB);
     }
