@@ -108,13 +108,13 @@ namespace tinybit {
 
   /**
    * Set the motor speeds
-   * @param left speed percentage of the left motor between -100 and 100. eg: 100
-   * @param right speed percentage of the right motor between -100 and 100. eg: 100
+   * @param left speed percentage of the left motor between -100 and 100. eg: 50
+   * @param right speed percentage of the right motor between -100 and 100. eg: 50
    */
   //% blockId="setMotorSpeeds" block="motor speed|left %left|right %right"
   //% group="Motors"
-  //% left.min=-100 left.max=100
-  //% right.min=-100 right.max=100
+  //% left.min=-100 left.max=100 left.defl=50
+  //% right.min=-100 right.max=100 right.defl=50
   export function setMotorSpeeds(left: number, right: number): void {
     left *= 2.55;
     right *= 2.55;
