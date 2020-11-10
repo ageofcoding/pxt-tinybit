@@ -76,7 +76,7 @@ namespace tinybit {
    * The neopixel strip for the nav lights
    */
   //% blockId="tinybit_navLights" block="nav light strip"
-  export function navLights(): neopixel:Strip {
+  export function navLights(): neopixel.Strip {
     if (!navLightStrip) {
       navLightStrip = neopixel.create(DigitalPin.P12, 2, NeoPixelMode.RGB);
     }
