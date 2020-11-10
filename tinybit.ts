@@ -9,7 +9,7 @@ enum TinyBitColor {
   Blue = 0x0000FF,
 
   //% block=orange
-  Orange = 0xFFA500,
+  Orange = 0xBF8000,
 }
 
 /**
@@ -20,6 +20,8 @@ namespace tinybit {
   const PwmControllerAddress = 0x01;
   const RgbBlock = 0x01;
   const MotorBlock = 0x02;
+
+  let navLightStrip: neopixel.Strip;
 
   function toRgb(color: number): [number, number, number] {
     const red = (color >> 16) & 0xFF;
@@ -68,5 +70,12 @@ namespace tinybit {
     i2cBuffer[3] = blue;
 
     pins.i2cWriteBuffer(PwmControllerAddress, i2cBuffer);
+  }
+
+  export function navLights: neopixel:Strip {
+    if (!navLightStrip) {
+      navLightStrip = neopixel.create(DigitalPin.P12, 2, NeoPixelMode.RGB);
+    }
+    return navLightStrip;
   }
 }
