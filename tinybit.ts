@@ -105,4 +105,27 @@ namespace tinybit {
     const distance = pins.pulseIn(DigitalPin.P15, PulseValue.High, 23200);
     return distance / 58;
   }
+
+  /**
+   * Set the motor speeds
+   *
+   * @param left speed percentage of the left motor between -100 and 100. eg: 100
+   * @param right speed percentage of the right motor between -100 and 100. eg: 100
+   */
+  //% blockId="setMotorSpeeds" block="set motor speeds|left %left|right %right"
+  export function setMotorSpeeds(left: number, right: number): void {
+    const leftForward = Math.max(0, left);
+    const leftReverse = Math.max(0, -left);
+    const rightForward = Math.max(0, right);
+    const rightReverse = Math.max(0, -right);
+
+    const motorBuffer = pins.createBuffer(5);
+    motorBuffer[0] = MotorPinGroup;
+    motorBuffer[1] = rightForward;
+    motorBuffer[2] = rightReverse;
+    motorBuffer[3] = leftForward;
+    motorBuffer[4] = leftReverse;
+
+    pins.i2cWriteBuffer(PwmControllerAddress, motorBuffer);
+  }
 }
