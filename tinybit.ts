@@ -1,3 +1,17 @@
+enum TinyBitColor {
+  //% block=red
+  Red = 0xFF0000,
+
+  //% block=green
+  Green = 0x00FF00,
+
+  //% block=blue
+  Blue = 0x0000FF,
+
+  //% block=orange
+  Orange = 0xFFA500,
+}
+
 /**
  * Controls the functions of the Yahboom Tiny:bit robot.
  */
@@ -6,20 +20,6 @@ namespace tinybit {
   const PwmControllerAddress = 0x01;
   const RgbBlock = 0x01;
   const MotorBlock = 0x02;
-
-  enum Colors {
-    //% block=red
-    Red = 0xFF0000,
-
-    //% block=green
-    Green = 0x00FF00,
-
-    //% block=blue
-    Blue = 0x0000FF,
-
-    //% block=orange
-    Orange = 0xFFA500,
-  }
 
   function toRgb(color: number): [number, number, number] {
     const red = (color >> 16) & 0xFF;
@@ -36,7 +36,7 @@ namespace tinybit {
   //% weight=1
   //% blockId="tinybit_color" block="%color"
   //% advanced=true
-  export function color(color: Colors): number {
+  export function color(color: TinyBitColor): number {
     return color;
   }
 
