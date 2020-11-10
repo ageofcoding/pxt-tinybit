@@ -8,9 +8,9 @@ namespace tinybit {
   const MotorBlock = 0x02;
 
   function toRgb(color: number): [number, number, number] {
-    const red = (color >> 16) && 0xFF;
-    const green = (color >> 8) && 0xFF;
-    const blue = color && 0xFF;
+    const red = (color >> 16) & 0xFF;
+    const green = (color >> 8) & 0xFF;
+    const blue = color & 0xFF;
 
     return [red, green, blue];
   }
