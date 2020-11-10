@@ -4,8 +4,8 @@
 //% color=#ebd534 weight=100 icon="\f1b9"
 namespace tinybit {
   const PwmControllerAddress = 0x01;
-  const MotorBlock = 0x01;
-  const RgbBlock = 0x02;
+  const RgbBlock = 0x01;
+  const MotorBlock = 0x02;
 
   function toRgb(color: number): [number, number, number] {
     const red = (color >> 16) && 0xFF;
