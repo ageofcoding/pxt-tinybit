@@ -108,7 +108,6 @@ namespace tinybit {
 
   /**
    * Set the motor speeds
-   *
    * @param left speed percentage of the left motor between -100 and 100. eg: 100
    * @param right speed percentage of the right motor between -100 and 100. eg: 100
    */
@@ -117,6 +116,9 @@ namespace tinybit {
   //% left.min=-100 left.max=100
   //% right.min=-100 right.max=100
   export function setMotorSpeeds(left: number, right: number): void {
+    left *= 2.55;
+    right *= 2.55;
+
     const leftForward = Math.max(0, left);
     const leftReverse = Math.max(0, -left);
     const rightForward = Math.max(0, right);
