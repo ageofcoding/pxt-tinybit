@@ -1,13 +1,13 @@
+/**
+ * Some special colors for the Tiny:bit.  Neopixel colors will work too.
+ */
 enum TinyBitColor {
   //% block=red
   Red = 0xFF0000,
-
   //% block=green
   Green = 0x00FF00,
-
   //% block=blue
   Blue = 0x0000FF,
-
   //% block=orange
   Orange = 0xBF8000,
 }
@@ -15,7 +15,7 @@ enum TinyBitColor {
 /**
  * Controls the functions of the Yahboom Tiny:bit robot.
  */
-//% color=#ebd534 weight=100 icon="\f544"
+//% color=#ebd534 weight=100 icon="\uf544"
 namespace tinybit {
   const PwmControllerAddress = 0x01;
   const RgbBlock = 0x01;
@@ -33,10 +33,9 @@ namespace tinybit {
 
   /**
    * Gets a color value by name.
-   * @param color color name
    */
   //% weight=1
-  //% blockId="tinybit_color" block="color %color"
+  //% blockId="tinybit_color" block="%color"
   //% advanced=true
   export function color(color: TinyBitColor): number {
     return color;
