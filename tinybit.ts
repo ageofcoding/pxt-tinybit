@@ -116,13 +116,13 @@ namespace tinybit {
   //% left.min=-100 left.max=100 left.defl=50
   //% right.min=-100 right.max=100 right.defl=50
   export function setMotorSpeeds(left: number, right: number): void {
-    left *= 2.55;
-    right *= 2.55;
+    const leftPower = left * 2.55;
+    const rightPower = right * 2.55;
 
-    const leftForward = Math.max(0, left);
-    const leftReverse = Math.max(0, -left);
-    const rightForward = Math.max(0, right);
-    const rightReverse = Math.max(0, -right);
+    const leftForward = Math.max(0, leftPower);
+    const leftReverse = Math.max(0, -leftPower);
+    const rightForward = Math.max(0, rightPower);
+    const rightReverse = Math.max(0, -rightPower);
 
     const motorBuffer = pins.createBuffer(5);
     motorBuffer[0] = MotorPinGroup;
