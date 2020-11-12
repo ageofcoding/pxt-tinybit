@@ -131,7 +131,7 @@ namespace tinybit {
    * @param left speed percentage of the left motor between -100 and 100. eg: 50
    * @param right speed percentage of the right motor between -100 and 100. eg: 50
    */
-  //% blockId="setMotorSpeeds" block="motor speed|left %left|right %right"
+  //% blockId="tinybit_setMotorSpeeds" block="motor speed|left %left|right %right"
   //% group="Motors"
   //% left.min=-100 left.max=100 left.defl=50
   //% right.min=-100 right.max=100 right.defl=50
@@ -163,7 +163,7 @@ namespace tinybit {
    * @param y percentage of movement applied between -100 and 100. eg: 50
    * @params xSensitivity how sensitive is the x axis between 1 and 100, eg: 20
    */
-  //% blockId="setMotorVector" block="motor power|x %x|y %y"
+  //% blockId="tinybit_setMotorVector" block="motor power|x %x|y %y"
   //% group="Motors"
   //% x.min=-100 x.max=100 x.defl=0
   //% y.min=-100 y.max=100 y.defl=50
