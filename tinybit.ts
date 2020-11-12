@@ -159,19 +159,21 @@ namespace tinybit {
 
   /**
    * Set the vehicle direction
-   * @param x percentage of rotation applied -100 and 100. eg: 0
-   * @param y percentage of movement applied -100 and 100. eg: 50
+   * @param x percentage of rotation applied between -100 and 100. eg: 0
+   * @param y percentage of movement applied between -100 and 100. eg: 50
+   * @params xSensitivity how sensitive is the x axis between 1 and 100, eg: 20
    */
   //% blockId="setMotorVector" block="motor power|x %x|y %y"
   //% group="Motors"
   //% x.min=-100 x.max=100 x.defl=0
   //% y.min=-100 y.max=100 y.defl=50
-  export function setMotorVector(x: number, y: number): void {
+  //% xSensitivity.min=1 xSensitivity.max=100 xSensitivity.defl=20
+  export function setMotorVector(x: number, y: number, xSensitivity: number): void {
     const maxPower = Math.min(100, Math.sqrt(x * x + y * y));
 
     // apply a gamma curve to the x axis because it's a little crazy town trying to drive it
     // with a linear x axis
-    const gammaX = Math.pow(Math.abs(x) / 100, 5) * 100;
+    const gammaX = Math.pow(Math.abs(x) / 100, xSensitivity) * 100;
     log(`Raw X: ${x}`);
     log(`Gamma Corrected X: ${gammaX}`);
     const variablePower = (100 - 2 * gammaX) / 100 * maxPower;
