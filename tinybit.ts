@@ -144,6 +144,9 @@ namespace tinybit {
   //% x.min=-100 x.max=100 x.defl=0
   //% y.min=-100 y.max=100 y.defl=50
   export function setMotorVector(x: number, y: number): void {
+    console.log(`Raw x: ${x}`);
+    console.log(`Raw y: ${y}`);
+
     const maxPower = Math.min(100, Math.sqrt(x * x + y * y));
     const variablePower = (100 - 2 * Math.abs(x)) / 100 * maxPower;
 
@@ -153,7 +156,8 @@ namespace tinybit {
     }
 
     const [left, right] = speedSettings;
-    console.log(`Power updated: ${left}, ${right}`);
+    console.log(`Left: ${left}`);
+    console.log(`Right: ${right}`);
     setMotorSpeeds(left, right);
   }
 }
