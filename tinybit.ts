@@ -18,13 +18,16 @@ enum TinyBitColor {
 //% color=#ebd534 weight=100 icon="\uf1b9"
 //% groups='["Motors", "Distance Sensor", "Line Reader","Headlights", "Nav Lights", "Utilities", "Infrared", "Logging"]'
 namespace tinybit {
-  let loggingEnabled = false;
-
   const PwmControllerAddress = 0x01;
   const RgbPinGroup = 0x01;
   const MotorPinGroup = 0x02;
 
+  const DRIVE_BIAS = 2;
+  const ROTATION_SENSITIVITY = 2;
+
+  let loggingEnabled = false;
   let navLightStrip: neopixel.Strip;
+  let speedLimit = 255;
 
   function log(message: string): void {
     if (!loggingEnabled) { return; }
@@ -127,6 +130,17 @@ namespace tinybit {
   }
 
   /**
+   * Set the maximum motor speed
+   * @param maxSpeed the maximum speed the motors are allowed to turn between 0 and 255. eg: 255
+   */
+  //% blockId="tinybit_setSpeedLimit" block="set speed limit %maxSpeed"
+  //% group="Motors"
+  //% maxSpeed.min=0 maxSpeed.max=255 maxSpeed.defl=255
+  export function setSpeedLimit(maxSpeed: number): void {
+    speedLimit = maxSpeed;
+  }
+
+  /**
    * Set the motor speeds
    * @param left speed percentage of the left motor between -100 and 100. eg: 50
    * @param right speed percentage of the right motor between -100 and 100. eg: 50
@@ -136,11 +150,11 @@ namespace tinybit {
   //% left.min=-100 left.max=100 left.defl=50
   //% right.min=-100 right.max=100 right.defl=50
   export function setMotorSpeeds(left: number, right: number): void {
-    log(`Left motor speed: ${left}`);
-    log(`Right motor speed: ${right}`);
+    const leftPower = Math.round(left * speedLimit / 100);
+    const rightPower = Math.round(right * speedLimit / 100);
 
-    const leftPower = Math.round(left * 2.55);
-    const rightPower = Math.round(right * 2.55);
+    log(`Left motor power: ${leftPower}`);
+    log(`Right motor power: ${rightPower}`);
 
     const leftForward = Math.max(0, leftPower);
     const leftReverse = Math.max(0, -leftPower);
@@ -161,24 +175,19 @@ namespace tinybit {
    * Set the vehicle direction
    * @param x percentage of rotation applied between -100 and 100. eg: 0
    * @param y percentage of movement applied between -100 and 100. eg: 50
-   * @param xSensitivity how sensitive is the x axis between 1 and 100, eg: 20
    */
-  //% blockId="tinybit_setMotorVector" block="motor power|x %x|y %y| with X axis sensitivity %xSensitivity"
+  //% blockId="tinybit_setMotorVector" block="motor power|x %x|y %y"
   //% group="Motors"
   //% x.min=-100 x.max=100 x.defl=0
   //% y.min=-100 y.max=100 y.defl=20
-  //% xSensitivity.min=1 xSensitivity.max=100 xSensitivity.defl=10
-  export function setMotorVector(x: number, y: number, xSensitivity: number): void {
-    // apply a gamma curve to the x axis because it's a little crazy town trying to drive it
-    // with a linear x axis
-    const gammaX = Math.pow(Math.abs(x) / 100, xSensitivity) * 100;
-    log(`Raw X: ${x}`);
-    log(`Gamma Corrected X: ${gammaX}`);
+  export function setMotorVector(x: number, y: number): void {
+    const maxPower = Math.min(100, Math.sqrt(x * x + y * y));
 
-    const maxPower = Math.min(100, Math.sqrt(gammaX * gammaX + y * y));
-    const variablePower = (100 - 2 * gammaX) / 100 * maxPower;
+    let rotationalIntent = x / (x + y * DRIVE_BIAS);
+    rotationalIntent = Math.pow(rotationalIntent, ROTATION_SENSITIVITY);
+    const differentialPower = Math.map(rotationalIntent, 0, 1, 100, -100);
 
-    const speedSettings = y < 0 ? [-variablePower, -maxPower] : [maxPower, variablePower];
+    const speedSettings = y < 0 ? [-differentialPower, -maxPower] : [maxPower, differentialPower];
     if (x < 0) {
       speedSettings.reverse();
     }
