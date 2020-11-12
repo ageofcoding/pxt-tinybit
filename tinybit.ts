@@ -147,7 +147,7 @@ namespace tinybit {
     const maxPower = 2.55 * Math.min(100, Math.sqrt(x * x + y * y));
     const variablePower = (100 - 2 * Math.abs(x)) / 100 * maxPower;
 
-    // let speedSettings = y < 0 ? [-variablePower, -maxPower] : [maxPower, variablePower];
+    let speedSettings = y < 0 ? [-variablePower, -maxPower] : [maxPower, variablePower];
 
     // if (x < 0) {
     //   speedSettings = speedSettings.reverse();
