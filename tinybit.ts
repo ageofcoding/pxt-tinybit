@@ -166,16 +166,16 @@ namespace tinybit {
   //% blockId="tinybit_setMotorVector" block="motor power|x %x|y %y| with X axis sensitivity %xSensitivity"
   //% group="Motors"
   //% x.min=-100 x.max=100 x.defl=0
-  //% y.min=-100 y.max=100 y.defl=50
-  //% xSensitivity.min=1 xSensitivity.max=100 xSensitivity.defl=20
+  //% y.min=-100 y.max=100 y.defl=20
+  //% xSensitivity.min=1 xSensitivity.max=100 xSensitivity.defl=10
   export function setMotorVector(x: number, y: number, xSensitivity: number): void {
-    const maxPower = Math.min(100, Math.sqrt(x * x + y * y));
-
     // apply a gamma curve to the x axis because it's a little crazy town trying to drive it
     // with a linear x axis
     const gammaX = Math.pow(Math.abs(x) / 100, xSensitivity) * 100;
     log(`Raw X: ${x}`);
     log(`Gamma Corrected X: ${gammaX}`);
+
+    const maxPower = Math.min(100, Math.sqrt(gammaX * gammaX + y * y));
     const variablePower = (100 - 2 * gammaX) / 100 * maxPower;
 
     const speedSettings = y < 0 ? [-variablePower, -maxPower] : [maxPower, variablePower];
