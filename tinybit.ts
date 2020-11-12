@@ -163,7 +163,7 @@ namespace tinybit {
    * @param y percentage of movement applied between -100 and 100. eg: 50
    * @param xSensitivity how sensitive is the x axis between 1 and 100, eg: 20
    */
-  //% blockId="tinybit_setMotorVector" block="motor power|x %x|y %y"
+  //% blockId="tinybit_setMotorVector" block="motor power|x %x|y %y| with X axis sensitivity %xSensitivity"
   //% group="Motors"
   //% x.min=-100 x.max=100 x.defl=0
   //% y.min=-100 y.max=100 y.defl=50
