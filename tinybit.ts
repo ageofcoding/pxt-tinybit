@@ -168,7 +168,11 @@ namespace tinybit {
   //% y.min=-100 y.max=100 y.defl=50
   export function setMotorVector(x: number, y: number): void {
     const maxPower = Math.min(100, Math.sqrt(x * x + y * y));
-    const variablePower = (100 - 2 * Math.abs(x)) / 100 * maxPower;
+
+    // apply a gamma curve to the x axis because it's a little crazy town trying to drive it
+    // with a linear x axis
+    const gammaPower = Math.pow(Math.abs(x) / 100, 2) * 100;
+    const variablePower = (100 - 2 * gammaPower) / 100 * maxPower;
 
     const speedSettings = y < 0 ? [-variablePower, -maxPower] : [maxPower, variablePower];
     if (x < 0) {
