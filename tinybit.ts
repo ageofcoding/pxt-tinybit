@@ -139,9 +139,9 @@ namespace tinybit {
    * @param x percentage of rotation applied -100 and 100. eg: 0
    * @param y percentage of movement applied -100 and 100. eg: 50
    */
-  //% blockId="setMotorSpeeds" block="motor speed|left %left|right %right"
+  //% blockId="setMotorVector" block="motor power|x %x|y %y"
   //% group="Motors"
-  //% x.min=-100 x.max=100 x.defl=50
+  //% x.min=-100 x.max=100 x.defl=0
   //% y.min=-100 y.max=100 y.defl=50
   export function setMotorVector(x: number, y: number): void {
     const maxPower = 2.55 * Math.min(100, Math.sqrt(x * x + y * y));
