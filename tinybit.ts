@@ -136,6 +136,9 @@ namespace tinybit {
   //% left.min=-100 left.max=100 left.defl=50
   //% right.min=-100 right.max=100 right.defl=50
   export function setMotorSpeeds(left: number, right: number): void {
+    log(`Left motor speed: ${left}`);
+    log(`Right motor speed: ${right}`);
+
     const leftPower = Math.round(left * 2.55);
     const rightPower = Math.round(right * 2.55);
 
@@ -173,8 +176,6 @@ namespace tinybit {
     }
 
     const [left, right] = speedSettings;
-    log(`Left: ${left}`);
-    log(`Right: ${right}`);
     setMotorSpeeds(left, right);
   }
 }
