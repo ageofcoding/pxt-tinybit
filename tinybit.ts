@@ -154,6 +154,6 @@ namespace tinybit {
     }
 
     const [left, right] = speedSettings;
-    // setMotorSpeeds(left, right);
+    setMotorSpeeds(left, right);
   }
 }
