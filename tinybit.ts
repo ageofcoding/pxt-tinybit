@@ -161,7 +161,7 @@ namespace tinybit {
    * Set the vehicle direction
    * @param x percentage of rotation applied between -100 and 100. eg: 0
    * @param y percentage of movement applied between -100 and 100. eg: 50
-   * @params xSensitivity how sensitive is the x axis between 1 and 100, eg: 20
+   * @param xSensitivity how sensitive is the x axis between 1 and 100, eg: 20
    */
   //% blockId="tinybit_setMotorVector" block="motor power|x %x|y %y"
   //% group="Motors"
