@@ -133,4 +133,27 @@ namespace tinybit {
 
     pins.i2cWriteBuffer(PwmControllerAddress, motorBuffer);
   }
+
+  /**
+   * Set the vehicle direction
+   * @param x percentage of rotation applied -100 and 100. eg: 0
+   * @param y percentage of movement applied -100 and 100. eg: 50
+   */
+  //% blockId="setMotorSpeeds" block="motor speed|left %left|right %right"
+  //% group="Motors"
+  //% x.min=-100 x.max=100 x.defl=50
+  //% y.min=-100 y.max=100 y.defl=50
+  export function setMotorVector(x: number, y: number): void {
+    const maxPower = 2.55 * Math.min(100, Math.sqrt(x * x + y * y));
+    const variablePower = (100 - 2 * Math.abs(x)) / 100 * maxPower;
+
+    let speedSettings = y < 0 ? [-variablePower, -maxPower] : [maxPower, variablePower];
+
+    if (x < 0) {
+      speedSettings = speedSettings.reverse();
+    }
+
+    const [left, right] = speedSettings;
+    setMotorSpeeds(left, right);
+  }
 }
