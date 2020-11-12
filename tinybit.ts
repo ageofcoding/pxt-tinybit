@@ -16,13 +16,20 @@ enum TinyBitColor {
  * Controls the functions of the Yahboom Tiny:bit robot.
  */
 //% color=#ebd534 weight=100 icon="\uf1b9"
-//% groups='["Motors", "Distance Sensor", "Line Reader","Headlights", "Nav Lights", "Utilities", "Infrared"]'
+//% groups='["Motors", "Distance Sensor", "Line Reader","Headlights", "Nav Lights", "Utilities", "Infrared", "Logging"]'
 namespace tinybit {
+  let loggingEnabled = false;
+
   const PwmControllerAddress = 0x01;
   const RgbPinGroup = 0x01;
   const MotorPinGroup = 0x02;
 
   let navLightStrip: neopixel.Strip;
+
+  function log(message: string): void {
+    if (!loggingEnabled) { return; }
+    console.log(message);
+  }
 
   function toRgb(color: number): [number, number, number] {
     const red = (color >> 16) & 0xFF;
@@ -30,6 +37,19 @@ namespace tinybit {
     const blue = color & 0xFF;
 
     return [red, green, blue];
+  }
+
+  /**
+   * Enable and disable logging
+   * @param enabled whether or not logging is on
+   */
+  //% blockId="tinybit_setLoggingStatus" block="show log messages %enabled"
+  //% weight=1
+  //% group="Logging"
+  //% advanced=true
+  //% enabled.defl=false
+  export function setLoggingEnabled(enabled: boolean): void {
+    loggingEnabled = enabled;
   }
 
   /**
@@ -144,8 +164,8 @@ namespace tinybit {
   //% x.min=-100 x.max=100 x.defl=0
   //% y.min=-100 y.max=100 y.defl=50
   export function setMotorVector(x: number, y: number): void {
-    console.log(`Raw x: ${x}`);
-    console.log(`Raw y: ${y}`);
+    log(`Raw x: ${x}`);
+    log(`Raw y: ${y}`);
 
     const maxPower = Math.min(100, Math.sqrt(x * x + y * y));
     const variablePower = (100 - 2 * Math.abs(x)) / 100 * maxPower;
@@ -156,8 +176,8 @@ namespace tinybit {
     }
 
     const [left, right] = speedSettings;
-    console.log(`Left: ${left}`);
-    console.log(`Right: ${right}`);
+    log(`Left: ${left}`);
+    log(`Right: ${right}`);
     setMotorSpeeds(left, right);
   }
 }
