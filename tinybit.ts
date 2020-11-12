@@ -183,9 +183,12 @@ namespace tinybit {
   export function setMotorVector(x: number, y: number): void {
     const maxPower = Math.min(100, Math.sqrt(x * x + y * y));
 
-    let rotationalIntent = x / (x + y * DRIVE_BIAS);
+    const absX = Math.abs(x);
+    const absY = Math.abs(y);
+
+    let rotationalIntent = absX / (absX + absY * DRIVE_BIAS);
     rotationalIntent = Math.pow(rotationalIntent, ROTATION_SENSITIVITY);
-    const differentialPower = Math.map(rotationalIntent, 0, 1, 100, -100);
+    const differentialPower = Math.map(rotationalIntent, 0, 1, maxPower, -maxPower);
 
     const speedSettings = y < 0 ? [-differentialPower, -maxPower] : [maxPower, differentialPower];
     if (x < 0) {
