@@ -149,11 +149,11 @@ namespace tinybit {
 
     let speedSettings = y < 0 ? [-variablePower, -maxPower] : [maxPower, variablePower];
 
-    // if (x < 0) {
+    if (x < 0) {
     //   speedSettings = speedSettings.reverse();
-    // }
+    }
 
-    // const [left, right] = speedSettings;
+    const [left, right] = speedSettings;
     // setMotorSpeeds(left, right);
   }
 }
