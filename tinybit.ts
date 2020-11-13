@@ -186,7 +186,7 @@ namespace tinybit {
     const absX = Math.abs(x);
     const absY = Math.abs(y);
 
-    let rotationalIntent = absX / (absX + absY * DRIVE_BIAS);
+    let rotationalIntent = absX / (absX + absY * DRIVE_BIAS) || 0;
     rotationalIntent = Math.pow(rotationalIntent, ROTATION_SENSITIVITY);
     const differentialPower = Math.map(rotationalIntent, 0, 1, maxPower, -maxPower);
 
